@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjpowernode.dao.StudentDao">
+    <select id="selectStudentById" parameterType="java.lang.Integer" resultType="com.bjpowernode.domain.Student">
+        select id,name,email,age from student where  id=#{studentId}
+    </select>
+    <!--多个参数使用@Param命名-->
+    <select id="selectMultiParam" resultType="com.bjpowernode.domain.Student">
+        select * from student where name = #{myname} or age = #{myage}
+</select>
+    <!--<select id="selecetViewStudent" resultType="com.bjpowernode.vo.ViewStudent">-->
+   <!-- <select id="selecetViewStudent" resultType="vstudent">-->
+
+    <select id="selectMapById" resultType="java.util.Map">
+        select id,name,email from student where id = #{stuid}
+    </select>
+    <!--<select id="countStudnet" resultType="int"> 或者用-->
+    <select id="countStudnet" resultType="java.lang.Integer">
+        select count(*) from student
+    </select>
+    <!--resultMap-->
+    <resultMap id="studentMap" type="com.bjpowernode.domain.Student">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="email" property="email" />
+        <result column="age" property="age" />
+
+    </resultMap>
+    <select id="selectAllStudents" resultMap="studentMap">
+        select * from student
+    </select>
+
+    <resultMap id="MyStudentMap" type="com.bjpowernode.domain.MyStudent">
+        <id column="id" property="myId" />
+        <result column="name" property="myName" />
+        <result column="email" property="myEmail" />
+        <result column="age" property="myAge" />
+
+    </resultMap>
+    <!--//也可以用resultType  给字段加上别名和MyStudent相同就行了-->
+    <select id="selectAllMyStudents" resultMap="MyStudentMap">
+        select * from student
+    </select>
+    <select id="selectLikeOne" resultType="com.bjpowernode.domain.Student">
+        select * from student where name like #{name}
+    </select>
+
+    <select id="selectLikeTwo" resultType="com.bjpowernode.domain.Student">
+        select * from student where name like "%" #{name} "%"
+     </select>
+</mapper>
